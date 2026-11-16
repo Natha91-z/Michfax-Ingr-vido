@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Michfax Ingrávido · NASA Space Apps 2026</title>
+  <script src="https://jsdelivr.net"></script>
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --surface: #151b26;
+      --surface-alt: #1c2433;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #ff6b35;
+      --danger: #f85149;
+      --warn: #d29922;
+      --ok: #2ea043;
+      --border: #2a3441;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    body.lang-es .en { display: none; }
+    body.lang-en .es { display: none; }
+
+    button, .file-label {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.9rem;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      display: inline-block;
+    }
+
+    button.active, button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 8px;
+    }
+
+    .big-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .rec-letter {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-weight: bold;
+      width: 28px;
+      height: 28px;
+      text-align: center;
+      line-height: 28px;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    select {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.6rem;
+      border-radius: 4px;
+      font-size: 0.95rem;
+    }
+
+    .result-box {
+      background: var(--surface-alt);
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.5rem;
+      border-radius: 4px;
+    }
+
+    .chart-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 0.7rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .tag-miss { color: var(--danger); font-weight: 600; }
+    .tag-ok { color: #56d364; font-weight: 600; }
+
+    .badge-verified {
+      display: inline-block;
+      background: rgba(46, 160, 67, 0.15);
+      color: #56d364;
+      border: 1px solid var(--ok);
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 12px;
+      margin-left: 0.5rem;
+    }
+
+    .badge-loading {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    .source-item {
+      margin-bottom: 1.2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .source-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    h2 {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .section-num {
+      color: var(--accent);
+      font-family: monospace;
+      margin-right: 0.4rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      padding: 2rem;
+      margin-top: 4rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="lang-es">
+
+  <header>
+    <div>
+      <strong>MI · Michfax Ingrávido</strong><br>
+      <small style="color: var(--muted);">Team Cóndor Ingrávido · NASA Space Apps 2026 · Flame in Freefall</small>
+    </div>
+    <div>
+      <button onclick="setLang('en')" id="btn-en">English</button>
+      <button class="active" onclick="setLang('es')" id="btn-es">Español</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero -->
+    <section>
+      <h1>
+        <span class="es">¿Detectaríamos este incendio a tiempo?</span>
+        <span class="en">Would we detect this fire in time?</span>
+      </h1>
+      <p>
+        <span class="es">La mayoría de los estudios preguntan cómo se comporta la llama en microgravedad. Nosotros hacemos la pregunta de la tripulación: cuando algo empieza a arder en una estación, un hábitat lunar o una nave rumbo a Marte, ¿sonará la alarma antes de que el aire sea peligroso?</span>
+        <span class="en">Most fire studies ask how flames behave in microgravity. We ask the crew's question: when something starts to burn on a station, a lunar habitat or a ship to Mars, will the alarm go off before the air turns dangerous?</span>
+      </p>
+    </section>
+
+    <!-- Métricas clave -->
+    <section class="grid-3">
+      <div class="card">
+        <div class="big-number">2 / 5</div>
+        <p class="es">Materiales cuyo humo el detector de dispersión de luz de la ISS a menudo no detectó: Teflón y Kapton, ambos comunes en electrónica [S2].</p>
+        <p class="en">Materials whose smoke the ISS light-scattering detector frequently failed to detect: Teflon and Kapton, both common in electronics [S2].</p>
+      </div>
+      <div class="card">
+        <div class="big-number">981 s</div>
+        <p class="es">Hasta que un detector de ionización alcanzó el umbral de alarma de 1 mg/m³ en la quema de PMMA de Saffire VI. Para entonces ya se había liberado la mayor parte del gas peligroso [S3].</p>
+        <p class="en">Until a terrestrial ionization detector reached a 1 mg/m³ alarm level in the Saffire VI PMMA burn. By then most of the hazardous gas had already been released [S3].</p>
+      </div>
+      <div class="card">
+        <div class="big-number">0.165 g</div>
+        <p class="es">La gravedad lunar es "casi la condición más inflamable", y los hábitats lunares planeados operarán con 34% de oxígeno. No encontramos datos de detección de humo para esa condición [S6].</p>
+        <p class="en">Lunar gravity is "nearly the most flammable condition", and planned lunar habitats run at 34% oxygen. No smoke-detection data exists for it in the sources we reviewed [S6].</p>
+      </div>
+    </section>
+
+    <!-- 01. Tamaño de partícula SAME-2 -->
+    <section>
+      <h2>
+        <span class="section-num">01</span>
+        <span class="es">El punto ciego del detector es el tamaño de la partícula</span>
+        <span class="en">The detector's blind spot is particle size</span>
+      </h2>
+      <p>
+        <span class="es">SAME-2 sobrecalentó cinco materiales de naves en la ISS y midió el humo. Los dos materiales que el detector de la estación no vio son los de partículas más pequeñas. El envejecimiento (humo viajando hasta un detector lejano por 720 s) agranda casi todas las partículas, pero el Teflón sigue siendo pequeño [S1, S2].</span>
+        <span class="en">SAME-2 overheated five spacecraft materials on the ISS and measured the smoke. The two materials the station detector missed are the two with the smallest particles. Ageing (smoke travelling to a distant detector for 720 s) makes most smoke bigger, but Teflon stays small [S1, S2].</span>
+      </p>
+
+      <div class="chart-wrapper">
+        <canvas id="particleChart" height="105"></canvas>
+        <table>
+          <thead>
+            <tr>
+              <th><span class="es">Material</span><span class="en">Material</span></th>
+              <th><span class="es">Humo fresco (µm)</span><span class="en">Fresh smoke (µm)</span></th>
+              <th><span class="es">Envejecido 720 s (µm)</span><span class="en">Aged 720 s (µm)</span></th>
+              <th><span class="es">Detector ISS [S2]</span><span class="en">ISS Detector [S2]</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Teflon (PTFE)</td>
+              <td>0.032</td>
+              <td>0.068</td>
+              <td class="tag-miss">✕ <span class="es">A menudo no detectado</span><span class="en">Often missed</span></td>
+            </tr>
+            <tr>
+              <td>Kapton</td>
+              <td>0.045</td>
+              <td>0.130</td>
+              <td class="tag-miss">✕ <span class="es">A menudo no detectado</span><span class="en">Often missed</span></td>
+            </tr>
+            <tr>
+              <td>Silicone</td>
+              <td>0.095</td>
+              <td>0.240</td>
+              <td class="tag-ok">✓ <span class="es">Detectado fácilmente</span><span class="en">Easily detected</span></td>
+            </tr>
+            <tr>
+              <td>Cellulose (Papel / Paper)</td>
+              <td>0.120</td>
+              <td>0.290</td>
+              <td class="tag-ok">✓ <span class="es">Detectado fácilmente</span><span class="en">Easily detected</span></td>
+            </tr>
+            <tr>
+              <td>Pyrell (Espuma / Foam)</td>
